@@ -1,0 +1,236 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <header>
+        <br>
+        <br>
+
+        <h1> Bienvenido a Clínica Cesfam</h1>
+
+        <form method="post" action="@ViewBag.FormAction">
+            <input type="hidden" name="token_ws" value="@ViewBag.TokenWs" />
+            <input type="submit" value="Ir a pagar" />
+        </form>
+
+        <br>
+        <br>
+
+
+
+
+
+    </header>
+
+    <article class="hoover">
+
+        <h1><div class="tittle">Centro de Salud Familiar</div></h1>
+        <br>
+        <br>
+        <br>
+
+        <div class="container">
+            <a class="nav-link" href="/control_stock/Index">
+                <div class="card">
+                    <br>
+                    <br>
+                    <br>
+                    <h4>Control Stock</h4>
+                    <p>Haz Click aquí para modificar el Stock de medicamentos, caducar y/o eliminar.</p>
+
+
+                </div>
+            </a>
+
+            <a class="nav-link" href="/pacientes/Index">
+                <div class="card">
+                    <br>
+                    <br>
+                    <br>
+                    <h4>Pacientes</h4>
+                    <p>Para ingresar un nuevo paciente, eliminar o modificar.</p>
+
+                </div>
+            </a>
+
+
+            <a class="nav-link" href="/medicamentoes/Index">
+                <div class="card">
+                    <br>
+                    <br>
+                    <br>
+                    <h4>Medicamentos</h4>
+                    <p>Haz click aquí para ingresar un nuevo medicamento.</p>
+
+                </div>
+            </a>
+
+
+
+
+
+
+
+    </article>
+
+
+   
+
+
+
+</body>
+
+<style>
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img{
+    width: 20%;
+}
+
+header{
+    text-align: center;
+
+
+
+}
+    body {
+        background-image: linear-gradient(90deg, rgba(67,93,221,1) 0%, rgba(0,212,255,0.7063200280112045) 53%);
+        width: 100%;
+    }
+
+
+
+/* CUADROS HOOVER*/
+
+
+
+
+
+.tittle{
+    text-align: center;
+    font-size: 40px;
+    color: #6a6a6a;
+    margin-top: 100px;
+    font-weight: 100;
+    font-family: 'calibri';
+}
+
+
+
+.container{
+
+    width: 100%;
+    max-width: 1200px;
+    height: 430px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+
+}
+
+    .container .card {
+        background-image: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(0,245,255,0.1741071428571429) 1%);
+        width: 350px;
+        height: 515px;
+        border-radius: 8px;
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        margin: 16px;
+        text-align: center;
+        transition: all 0.25s;
+    }
+
+.container .card:hover{
+    transform: translateY(-15px);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+}
+
+.container .card img{
+    width: 290px;
+    height: 220px;
+    margin-top: 16px;
+}
+
+.container .card h4{
+    font-weight: 600;
+}
+
+.container .card p{
+    padding:0 1rem;
+    font-size: 15px;
+    font-weight: 200;
+}
+
+.container .card a{
+    font-weight: 500;
+    text-decoration: none;
+    color: #0400ff;
+}
+
+.container .card input{
+
+    position: relative;
+    width: fit-content;
+    top: 75px;
+    left: 100px;
+
+
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+﻿@model ClinicaCesfam2023.Models.registro_retiro
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>registro_retiro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_reg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_reg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.med_receta.retiro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.med_receta.retiro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuario.tipo_usuario_tipo_user)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuario.tipo_usuario_tipo_user)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_reg }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

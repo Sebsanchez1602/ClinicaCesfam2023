@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="84d236fef51a48aab9f2e4b93fdbd1e9" Name="Diagram1">
+        <EntityTypeShape EntityType="CesfamClinicaModel.COMPRA" Width="1.5" PointX="5.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.control_stock" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.med_receta" Width="1.5" PointX="10.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.medicamento" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.paciente" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.receta_med" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.registro_retiro" Width="1.5" PointX="12.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.reserva_med" Width="1.5" PointX="12.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.tipo_usuario" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CesfamClinicaModel.usuario" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="CesfamClinicaModel.control_stock_medicamento_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.control_stock_usuario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.registro_retiro_med_receta_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.relation_17_medicamento_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.relation_17_receta_med_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.reserva_med_med_receta_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.receta_med_paciente_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.receta_med_usuario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.registro_retiro_usuario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.reserva_med_usuario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="CesfamClinicaModel.usuario_tipo_usuario_fk" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

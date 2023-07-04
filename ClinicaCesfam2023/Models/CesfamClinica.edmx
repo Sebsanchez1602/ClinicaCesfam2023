@@ -1,0 +1,744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CesfamClinicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COMPRA">
+          <Key>
+            <PropertyRef Name="id_compra" />
+          </Key>
+          <Property Name="id_compra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="total" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="control_stock">
+          <Key>
+            <PropertyRef Name="id_caduca_med" />
+          </Key>
+          <Property Name="id_caduca_med" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="medicamento_id_med" Type="int" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="fecha_control" Type="date" Nullable="false" />
+          <Property Name="usuario_rut_user" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="med_receta">
+          <Key>
+            <PropertyRef Name="id_med_recet" />
+          </Key>
+          <Property Name="id_med_recet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="receta_med_id_receta" Type="int" Nullable="false" />
+          <Property Name="medicamento_id_med" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="retiro" Type="char" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="medicamento">
+          <Key>
+            <PropertyRef Name="id_med" />
+          </Key>
+          <Property Name="id_med" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="fecha_venc" Type="date" Nullable="false" />
+          <Property Name="fabricante" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="precio" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="paciente">
+          <Key>
+            <PropertyRef Name="rut_pac" />
+          </Key>
+          <Property Name="rut_pac" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ap_paterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="num_telefono" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="receta_med">
+          <Key>
+            <PropertyRef Name="id_receta" />
+          </Key>
+          <Property Name="id_receta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fecha_emi" Type="date" Nullable="false" />
+          <Property Name="paciente_rut_pac" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="usuario_rut_user" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="registro_retiro">
+          <Key>
+            <PropertyRef Name="id_reg" />
+          </Key>
+          <Property Name="id_reg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_reg" Type="date" Nullable="false" />
+          <Property Name="usuario_rut_user" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="med_receta_id_med_recet" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reserva_med">
+          <Key>
+            <PropertyRef Name="id_reserva" />
+          </Key>
+          <Property Name="id_reserva" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_reserva" Type="date" Nullable="false" />
+          <Property Name="usuario_rut_user" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="med_receta_id_med_recet" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipo_usuario">
+          <Key>
+            <PropertyRef Name="tipo_user" />
+          </Key>
+          <Property Name="tipo_user" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="rut_user" />
+          </Key>
+          <Property Name="rut_user" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="contraseña" Type="int" Nullable="false" />
+          <Property Name="tipo_usuario_tipo_user" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ap_paterno" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="num_telef" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="control_stock_medicamento_fk">
+          <End Role="medicamento" Type="Self.medicamento" Multiplicity="1" />
+          <End Role="control_stock" Type="Self.control_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicamento">
+              <PropertyRef Name="id_med" />
+            </Principal>
+            <Dependent Role="control_stock">
+              <PropertyRef Name="medicamento_id_med" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="control_stock_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="control_stock" Type="Self.control_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="rut_user" />
+            </Principal>
+            <Dependent Role="control_stock">
+              <PropertyRef Name="usuario_rut_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="receta_med_paciente_fk">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="receta_med" Type="Self.receta_med" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="rut_pac" />
+            </Principal>
+            <Dependent Role="receta_med">
+              <PropertyRef Name="paciente_rut_pac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="receta_med_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="receta_med" Type="Self.receta_med" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="rut_user" />
+            </Principal>
+            <Dependent Role="receta_med">
+              <PropertyRef Name="usuario_rut_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="registro_retiro_med_receta_fk">
+          <End Role="med_receta" Type="Self.med_receta" Multiplicity="1" />
+          <End Role="registro_retiro" Type="Self.registro_retiro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="med_receta">
+              <PropertyRef Name="id_med_recet" />
+            </Principal>
+            <Dependent Role="registro_retiro">
+              <PropertyRef Name="med_receta_id_med_recet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="registro_retiro_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="registro_retiro" Type="Self.registro_retiro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="rut_user" />
+            </Principal>
+            <Dependent Role="registro_retiro">
+              <PropertyRef Name="usuario_rut_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relation_17_medicamento_fk">
+          <End Role="medicamento" Type="Self.medicamento" Multiplicity="1" />
+          <End Role="med_receta" Type="Self.med_receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicamento">
+              <PropertyRef Name="id_med" />
+            </Principal>
+            <Dependent Role="med_receta">
+              <PropertyRef Name="medicamento_id_med" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relation_17_receta_med_fk">
+          <End Role="receta_med" Type="Self.receta_med" Multiplicity="1" />
+          <End Role="med_receta" Type="Self.med_receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="receta_med">
+              <PropertyRef Name="id_receta" />
+            </Principal>
+            <Dependent Role="med_receta">
+              <PropertyRef Name="receta_med_id_receta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reserva_med_med_receta_fk">
+          <End Role="med_receta" Type="Self.med_receta" Multiplicity="1" />
+          <End Role="reserva_med" Type="Self.reserva_med" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="med_receta">
+              <PropertyRef Name="id_med_recet" />
+            </Principal>
+            <Dependent Role="reserva_med">
+              <PropertyRef Name="med_receta_id_med_recet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reserva_med_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="reserva_med" Type="Self.reserva_med" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="rut_user" />
+            </Principal>
+            <Dependent Role="reserva_med">
+              <PropertyRef Name="usuario_rut_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_tipo_usuario_fk">
+          <End Role="tipo_usuario" Type="Self.tipo_usuario" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_usuario">
+              <PropertyRef Name="tipo_user" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="tipo_usuario_tipo_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CesfamClinicaModelStoreContainer">
+          <EntitySet Name="COMPRA" EntityType="Self.COMPRA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="control_stock" EntityType="Self.control_stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="med_receta" EntityType="Self.med_receta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="medicamento" EntityType="Self.medicamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="paciente" EntityType="Self.paciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="receta_med" EntityType="Self.receta_med" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="registro_retiro" EntityType="Self.registro_retiro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reserva_med" EntityType="Self.reserva_med" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_usuario" EntityType="Self.tipo_usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="control_stock_medicamento_fk" Association="Self.control_stock_medicamento_fk">
+            <End Role="medicamento" EntitySet="medicamento" />
+            <End Role="control_stock" EntitySet="control_stock" />
+          </AssociationSet>
+          <AssociationSet Name="control_stock_usuario_fk" Association="Self.control_stock_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="control_stock" EntitySet="control_stock" />
+          </AssociationSet>
+          <AssociationSet Name="receta_med_paciente_fk" Association="Self.receta_med_paciente_fk">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="receta_med" EntitySet="receta_med" />
+          </AssociationSet>
+          <AssociationSet Name="receta_med_usuario_fk" Association="Self.receta_med_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="receta_med" EntitySet="receta_med" />
+          </AssociationSet>
+          <AssociationSet Name="registro_retiro_med_receta_fk" Association="Self.registro_retiro_med_receta_fk">
+            <End Role="med_receta" EntitySet="med_receta" />
+            <End Role="registro_retiro" EntitySet="registro_retiro" />
+          </AssociationSet>
+          <AssociationSet Name="registro_retiro_usuario_fk" Association="Self.registro_retiro_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="registro_retiro" EntitySet="registro_retiro" />
+          </AssociationSet>
+          <AssociationSet Name="relation_17_medicamento_fk" Association="Self.relation_17_medicamento_fk">
+            <End Role="medicamento" EntitySet="medicamento" />
+            <End Role="med_receta" EntitySet="med_receta" />
+          </AssociationSet>
+          <AssociationSet Name="relation_17_receta_med_fk" Association="Self.relation_17_receta_med_fk">
+            <End Role="receta_med" EntitySet="receta_med" />
+            <End Role="med_receta" EntitySet="med_receta" />
+          </AssociationSet>
+          <AssociationSet Name="reserva_med_med_receta_fk" Association="Self.reserva_med_med_receta_fk">
+            <End Role="med_receta" EntitySet="med_receta" />
+            <End Role="reserva_med" EntitySet="reserva_med" />
+          </AssociationSet>
+          <AssociationSet Name="reserva_med_usuario_fk" Association="Self.reserva_med_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="reserva_med" EntitySet="reserva_med" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_tipo_usuario_fk" Association="Self.usuario_tipo_usuario_fk">
+            <End Role="tipo_usuario" EntitySet="tipo_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CesfamClinicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COMPRA">
+          <Key>
+            <PropertyRef Name="id_compra" />
+          </Key>
+          <Property Name="id_compra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="total" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="control_stock">
+          <Key>
+            <PropertyRef Name="id_caduca_med" />
+          </Key>
+          <Property Name="id_caduca_med" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="medicamento_id_med" Type="Int32" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="fecha_control" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="usuario_rut_user" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="medicamento" Relationship="Self.control_stock_medicamento_fk" FromRole="control_stock" ToRole="medicamento" />
+          <NavigationProperty Name="usuario" Relationship="Self.control_stock_usuario_fk" FromRole="control_stock" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="med_receta">
+          <Key>
+            <PropertyRef Name="id_med_recet" />
+          </Key>
+          <Property Name="id_med_recet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="receta_med_id_receta" Type="Int32" Nullable="false" />
+          <Property Name="medicamento_id_med" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="retiro" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="registro_retiro" Relationship="Self.registro_retiro_med_receta_fk" FromRole="med_receta" ToRole="registro_retiro" />
+          <NavigationProperty Name="medicamento" Relationship="Self.relation_17_medicamento_fk" FromRole="med_receta" ToRole="medicamento" />
+          <NavigationProperty Name="receta_med" Relationship="Self.relation_17_receta_med_fk" FromRole="med_receta" ToRole="receta_med" />
+          <NavigationProperty Name="reserva_med" Relationship="Self.reserva_med_med_receta_fk" FromRole="med_receta" ToRole="reserva_med" />
+        </EntityType>
+        <EntityType Name="medicamento">
+          <Key>
+            <PropertyRef Name="id_med" />
+          </Key>
+          <Property Name="id_med" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="fecha_venc" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fabricante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="control_stock" Relationship="Self.control_stock_medicamento_fk" FromRole="medicamento" ToRole="control_stock" />
+          <NavigationProperty Name="med_receta" Relationship="Self.relation_17_medicamento_fk" FromRole="medicamento" ToRole="med_receta" />
+        </EntityType>
+        <EntityType Name="paciente">
+          <Key>
+            <PropertyRef Name="rut_pac" />
+          </Key>
+          <Property Name="rut_pac" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ap_paterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="num_telefono" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="receta_med" Relationship="Self.receta_med_paciente_fk" FromRole="paciente" ToRole="receta_med" />
+        </EntityType>
+        <EntityType Name="receta_med">
+          <Key>
+            <PropertyRef Name="id_receta" />
+          </Key>
+          <Property Name="id_receta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_emi" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="paciente_rut_pac" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usuario_rut_user" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="med_receta" Relationship="Self.relation_17_receta_med_fk" FromRole="receta_med" ToRole="med_receta" />
+          <NavigationProperty Name="paciente" Relationship="Self.receta_med_paciente_fk" FromRole="receta_med" ToRole="paciente" />
+          <NavigationProperty Name="usuario" Relationship="Self.receta_med_usuario_fk" FromRole="receta_med" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="registro_retiro">
+          <Key>
+            <PropertyRef Name="id_reg" />
+          </Key>
+          <Property Name="id_reg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_reg" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="usuario_rut_user" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="med_receta_id_med_recet" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="med_receta" Relationship="Self.registro_retiro_med_receta_fk" FromRole="registro_retiro" ToRole="med_receta" />
+          <NavigationProperty Name="usuario" Relationship="Self.registro_retiro_usuario_fk" FromRole="registro_retiro" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="reserva_med">
+          <Key>
+            <PropertyRef Name="id_reserva" />
+          </Key>
+          <Property Name="id_reserva" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_reserva" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="usuario_rut_user" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="med_receta_id_med_recet" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="med_receta" Relationship="Self.reserva_med_med_receta_fk" FromRole="reserva_med" ToRole="med_receta" />
+          <NavigationProperty Name="usuario" Relationship="Self.reserva_med_usuario_fk" FromRole="reserva_med" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="tipo_usuario">
+          <Key>
+            <PropertyRef Name="tipo_user" />
+          </Key>
+          <Property Name="tipo_user" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.usuario_tipo_usuario_fk" FromRole="tipo_usuario" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="rut_user" />
+          </Key>
+          <Property Name="rut_user" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contraseña" Type="Int32" Nullable="false" />
+          <Property Name="tipo_usuario_tipo_user" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ap_paterno" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="num_telef" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="control_stock" Relationship="Self.control_stock_usuario_fk" FromRole="usuario" ToRole="control_stock" />
+          <NavigationProperty Name="receta_med" Relationship="Self.receta_med_usuario_fk" FromRole="usuario" ToRole="receta_med" />
+          <NavigationProperty Name="registro_retiro" Relationship="Self.registro_retiro_usuario_fk" FromRole="usuario" ToRole="registro_retiro" />
+          <NavigationProperty Name="reserva_med" Relationship="Self.reserva_med_usuario_fk" FromRole="usuario" ToRole="reserva_med" />
+          <NavigationProperty Name="tipo_usuario" Relationship="Self.usuario_tipo_usuario_fk" FromRole="usuario" ToRole="tipo_usuario" />
+        </EntityType>
+        <Association Name="control_stock_medicamento_fk">
+          <End Role="medicamento" Type="Self.medicamento" Multiplicity="1" />
+          <End Role="control_stock" Type="Self.control_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicamento">
+              <PropertyRef Name="id_med" />
+            </Principal>
+            <Dependent Role="control_stock">
+              <PropertyRef Name="medicamento_id_med" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="control_stock_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="control_stock" Type="Self.control_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="rut_user" />
+            </Principal>
+            <Dependent Role="control_stock">
+              <PropertyRef Name="usuario_rut_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="registro_retiro_med_receta_fk">
+          <End Role="med_receta" Type="Self.med_receta" Multiplicity="1" />
+          <End Role="registro_retiro" Type="Self.registro_retiro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="med_receta">
+              <PropertyRef Name="id_med_recet" />
+            </Principal>
+            <Dependent Role="registro_retiro">
+              <PropertyRef Name="med_receta_id_med_recet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relation_17_medicamento_fk">
+          <End Role="medicamento" Type="Self.medicamento" Multiplicity="1" />
+          <End Role="med_receta" Type="Self.med_receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicamento">
+              <PropertyRef Name="id_med" />
+            </Principal>
+            <Dependent Role="med_receta">
+              <PropertyRef Name="medicamento_id_med" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="relation_17_receta_med_fk">
+          <End Role="receta_med" Type="Self.receta_med" Multiplicity="1" />
+          <End Role="med_receta" Type="Self.med_receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="receta_med">
+              <PropertyRef Name="id_receta" />
+            </Principal>
+            <Dependent Role="med_receta">
+              <PropertyRef Name="receta_med_id_receta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reserva_med_med_receta_fk">
+          <End Role="med_receta" Type="Self.med_receta" Multiplicity="1" />
+          <End Role="reserva_med" Type="Self.reserva_med" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="med_receta">
+              <PropertyRef Name="id_med_recet" />
+            </Principal>
+            <Dependent Role="reserva_med">
+              <PropertyRef Name="med_receta_id_med_recet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="receta_med_paciente_fk">
+          <End Role="paciente" Type="Self.paciente" Multiplicity="1" />
+          <End Role="receta_med" Type="Self.receta_med" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paciente">
+              <PropertyRef Name="rut_pac" />
+            </Principal>
+            <Dependent Role="receta_med">
+              <PropertyRef Name="paciente_rut_pac" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="receta_med_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="receta_med" Type="Self.receta_med" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="rut_user" />
+            </Principal>
+            <Dependent Role="receta_med">
+              <PropertyRef Name="usuario_rut_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="registro_retiro_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="registro_retiro" Type="Self.registro_retiro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="rut_user" />
+            </Principal>
+            <Dependent Role="registro_retiro">
+              <PropertyRef Name="usuario_rut_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reserva_med_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="reserva_med" Type="Self.reserva_med" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="rut_user" />
+            </Principal>
+            <Dependent Role="reserva_med">
+              <PropertyRef Name="usuario_rut_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_tipo_usuario_fk">
+          <End Role="tipo_usuario" Type="Self.tipo_usuario" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_usuario">
+              <PropertyRef Name="tipo_user" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="tipo_usuario_tipo_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CesfamClinicaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COMPRA" EntityType="Self.COMPRA" />
+          <EntitySet Name="control_stock" EntityType="Self.control_stock" />
+          <EntitySet Name="med_receta" EntityType="Self.med_receta" />
+          <EntitySet Name="medicamento" EntityType="Self.medicamento" />
+          <EntitySet Name="paciente" EntityType="Self.paciente" />
+          <EntitySet Name="receta_med" EntityType="Self.receta_med" />
+          <EntitySet Name="registro_retiro" EntityType="Self.registro_retiro" />
+          <EntitySet Name="reserva_med" EntityType="Self.reserva_med" />
+          <EntitySet Name="tipo_usuario" EntityType="Self.tipo_usuario" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="control_stock_medicamento_fk" Association="Self.control_stock_medicamento_fk">
+            <End Role="medicamento" EntitySet="medicamento" />
+            <End Role="control_stock" EntitySet="control_stock" />
+          </AssociationSet>
+          <AssociationSet Name="control_stock_usuario_fk" Association="Self.control_stock_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="control_stock" EntitySet="control_stock" />
+          </AssociationSet>
+          <AssociationSet Name="registro_retiro_med_receta_fk" Association="Self.registro_retiro_med_receta_fk">
+            <End Role="med_receta" EntitySet="med_receta" />
+            <End Role="registro_retiro" EntitySet="registro_retiro" />
+          </AssociationSet>
+          <AssociationSet Name="relation_17_medicamento_fk" Association="Self.relation_17_medicamento_fk">
+            <End Role="medicamento" EntitySet="medicamento" />
+            <End Role="med_receta" EntitySet="med_receta" />
+          </AssociationSet>
+          <AssociationSet Name="relation_17_receta_med_fk" Association="Self.relation_17_receta_med_fk">
+            <End Role="receta_med" EntitySet="receta_med" />
+            <End Role="med_receta" EntitySet="med_receta" />
+          </AssociationSet>
+          <AssociationSet Name="reserva_med_med_receta_fk" Association="Self.reserva_med_med_receta_fk">
+            <End Role="med_receta" EntitySet="med_receta" />
+            <End Role="reserva_med" EntitySet="reserva_med" />
+          </AssociationSet>
+          <AssociationSet Name="receta_med_paciente_fk" Association="Self.receta_med_paciente_fk">
+            <End Role="paciente" EntitySet="paciente" />
+            <End Role="receta_med" EntitySet="receta_med" />
+          </AssociationSet>
+          <AssociationSet Name="receta_med_usuario_fk" Association="Self.receta_med_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="receta_med" EntitySet="receta_med" />
+          </AssociationSet>
+          <AssociationSet Name="registro_retiro_usuario_fk" Association="Self.registro_retiro_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="registro_retiro" EntitySet="registro_retiro" />
+          </AssociationSet>
+          <AssociationSet Name="reserva_med_usuario_fk" Association="Self.reserva_med_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="reserva_med" EntitySet="reserva_med" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_tipo_usuario_fk" Association="Self.usuario_tipo_usuario_fk">
+            <End Role="tipo_usuario" EntitySet="tipo_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CesfamClinicaModelStoreContainer" CdmEntityContainer="CesfamClinicaEntities">
+          <EntitySetMapping Name="COMPRA">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.COMPRA">
+              <MappingFragment StoreEntitySet="COMPRA">
+                <ScalarProperty Name="id_compra" ColumnName="id_compra" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="control_stock">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.control_stock">
+              <MappingFragment StoreEntitySet="control_stock">
+                <ScalarProperty Name="id_caduca_med" ColumnName="id_caduca_med" />
+                <ScalarProperty Name="medicamento_id_med" ColumnName="medicamento_id_med" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="fecha_control" ColumnName="fecha_control" />
+                <ScalarProperty Name="usuario_rut_user" ColumnName="usuario_rut_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="med_receta">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.med_receta">
+              <MappingFragment StoreEntitySet="med_receta">
+                <ScalarProperty Name="id_med_recet" ColumnName="id_med_recet" />
+                <ScalarProperty Name="receta_med_id_receta" ColumnName="receta_med_id_receta" />
+                <ScalarProperty Name="medicamento_id_med" ColumnName="medicamento_id_med" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="retiro" ColumnName="retiro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medicamento">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.medicamento">
+              <MappingFragment StoreEntitySet="medicamento">
+                <ScalarProperty Name="id_med" ColumnName="id_med" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="fecha_venc" ColumnName="fecha_venc" />
+                <ScalarProperty Name="fabricante" ColumnName="fabricante" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="paciente">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.paciente">
+              <MappingFragment StoreEntitySet="paciente">
+                <ScalarProperty Name="rut_pac" ColumnName="rut_pac" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="ap_paterno" ColumnName="ap_paterno" />
+                <ScalarProperty Name="num_telefono" ColumnName="num_telefono" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="receta_med">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.receta_med">
+              <MappingFragment StoreEntitySet="receta_med">
+                <ScalarProperty Name="id_receta" ColumnName="id_receta" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="fecha_emi" ColumnName="fecha_emi" />
+                <ScalarProperty Name="paciente_rut_pac" ColumnName="paciente_rut_pac" />
+                <ScalarProperty Name="usuario_rut_user" ColumnName="usuario_rut_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="registro_retiro">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.registro_retiro">
+              <MappingFragment StoreEntitySet="registro_retiro">
+                <ScalarProperty Name="id_reg" ColumnName="id_reg" />
+                <ScalarProperty Name="fecha_reg" ColumnName="fecha_reg" />
+                <ScalarProperty Name="usuario_rut_user" ColumnName="usuario_rut_user" />
+                <ScalarProperty Name="med_receta_id_med_recet" ColumnName="med_receta_id_med_recet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reserva_med">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.reserva_med">
+              <MappingFragment StoreEntitySet="reserva_med">
+                <ScalarProperty Name="id_reserva" ColumnName="id_reserva" />
+                <ScalarProperty Name="fecha_reserva" ColumnName="fecha_reserva" />
+                <ScalarProperty Name="usuario_rut_user" ColumnName="usuario_rut_user" />
+                <ScalarProperty Name="med_receta_id_med_recet" ColumnName="med_receta_id_med_recet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_usuario">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.tipo_usuario">
+              <MappingFragment StoreEntitySet="tipo_usuario">
+                <ScalarProperty Name="tipo_user" ColumnName="tipo_user" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="CesfamClinicaModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="rut_user" ColumnName="rut_user" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="tipo_usuario_tipo_user" ColumnName="tipo_usuario_tipo_user" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="ap_paterno" ColumnName="ap_paterno" />
+                <ScalarProperty Name="num_telef" ColumnName="num_telef" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

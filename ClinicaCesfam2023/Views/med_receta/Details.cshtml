@@ -1,0 +1,50 @@
+﻿@model ClinicaCesfam2023.Models.med_receta
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>med_receta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.retiro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.retiro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.medicamento.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.medicamento.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.receta_med.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.receta_med.descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_med_recet }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

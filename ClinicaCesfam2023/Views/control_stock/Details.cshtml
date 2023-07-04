@@ -1,0 +1,58 @@
+﻿@model ClinicaCesfam2023.Models.control_stock
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>control_stock</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_control)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_control)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.medicamento.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.medicamento.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuario.tipo_usuario_tipo_user)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuario.tipo_usuario_tipo_user)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_caduca_med }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
