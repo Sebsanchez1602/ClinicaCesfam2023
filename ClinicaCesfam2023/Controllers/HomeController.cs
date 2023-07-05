@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Transbank.Common;
 using Transbank.Webpay.Common;
 using Transbank.Webpay.WebpayPlus;
+using ClinicaCesfam2023.Models;
 
 
 namespace ClinicaCesfam2023.Controllers
@@ -17,19 +18,35 @@ namespace ClinicaCesfam2023.Controllers
 
 
             var tx = new Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, WebpayIntegrationType.Test));
-            var amount = 2000;
-            var buyOrder = new Random().Next(100000, 999999999).ToString();
-            var sessionId = "sessionId";
-            string finalUrl = "https://localhost:44363/Home/Final";
 
-            var initResult = tx.Create(buyOrder, sessionId, amount, finalUrl);
-            var tokenWs = initResult.Token;
-            var formAction = initResult.Url;
+            using (var db = new CesfamClinicaEntities()) 
+            {
+                var medicamento = db.medicamento.FirstOrDefault(); 
 
-            ViewBag.Amount = amount;
-            ViewBag.BuyOrder = buyOrder;
-            ViewBag.TokenWs = tokenWs;
-            ViewBag.FormAction = formAction;
+                if (medicamento != null)
+                {
+
+
+                    var amount = medicamento.precio;
+                    var buyOrder = new Random().Next(100000, 999999999).ToString();
+                    var sessionId = "sessionId";
+                    string finalUrl = "https://localhost:44363/Home/Final";
+
+                    var initResult = tx.Create(buyOrder, sessionId, amount, finalUrl);
+                    var tokenWs = initResult.Token;
+                    var formAction = initResult.Url;
+
+                    ViewBag.Amount = amount;
+                    ViewBag.BuyOrder = buyOrder;
+                    ViewBag.TokenWs = tokenWs;
+                    ViewBag.FormAction = formAction;
+            
+                    
+
+                }
+               
+            }
+
 
             return View();
         }
