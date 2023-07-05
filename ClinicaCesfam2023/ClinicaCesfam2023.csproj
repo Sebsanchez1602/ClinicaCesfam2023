@@ -169,6 +169,7 @@
     <Compile Include="Controllers\COMPRAsController.cs" />
     <Compile Include="Controllers\control_stockController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MedicamentoCompraController.cs" />
     <Compile Include="Controllers\medicamentoesController.cs" />
     <Compile Include="Controllers\med_recetaController.cs" />
     <Compile Include="Controllers\pacientesController.cs" />
@@ -412,6 +413,11 @@
     <Content Include="webfonts\fa-brands-400.ttf" />
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Views\Home\Final.cshtml" />
+    <Content Include="Views\MedicamentoCompra\Create.cshtml" />
+    <Content Include="Views\MedicamentoCompra\Delete.cshtml" />
+    <Content Include="Views\MedicamentoCompra\Details.cshtml" />
+    <Content Include="Views\MedicamentoCompra\Edit.cshtml" />
+    <Content Include="Views\MedicamentoCompra\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
