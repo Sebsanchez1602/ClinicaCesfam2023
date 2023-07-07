@@ -16,38 +16,7 @@ namespace ClinicaCesfam2023.Controllers
         public ActionResult Index()
         {
 
-
-            var tx = new Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, WebpayIntegrationType.Test));
-
-            using (var db = new CesfamClinicaEntities()) 
-            {
-                var medicamento = db.medicamento.FirstOrDefault(); 
-
-                if (medicamento != null)
-                {
-
-
-                    var amount = medicamento.precio;
-                    var buyOrder = new Random().Next(100000, 999999999).ToString();
-                    var sessionId = "sessionId";
-                    string finalUrl = "https://localhost:44363/Home/Final";
-
-                    var initResult = tx.Create(buyOrder, sessionId, amount, finalUrl);
-                    var tokenWs = initResult.Token;
-                    var formAction = initResult.Url;
-
-                    ViewBag.Amount = amount;
-                    ViewBag.BuyOrder = buyOrder;
-                    ViewBag.TokenWs = tokenWs;
-                    ViewBag.FormAction = formAction;
             
-                    
-
-                }
-               
-            }
-
-
             return View();
         }
 

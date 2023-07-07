@@ -4,63 +4,79 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Compra</h2>
+<style>
+    body {
+        background: linear-gradient(to bottom right, #F7F7F7, #E9E9E9); /* Colores del fondo en gradiente */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+    .container {
+        background-color: #FFFFFF; /* Color de fondo del contenedor */
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333333;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #CCCCCC;
+        border-radius: 4px;
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #CCCCCC;
+        border-radius: 4px;
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+</style>
+
+<h1>Compra de medicamentos</h1>
+
+@using (Html.BeginForm("Index", "MedicamentoCompra", FormMethod.Post))
+{
+    @Html.DropDownList("MedicamentoId", ViewBag.Medicamentos as SelectList, "Selecciona un medicamento", new { @class = "form-control" })
+    <br />
+    <label for="Cantidad">Cantidad:</label>
+    <input type="number" name="Cantidad" class="form-control" min="1" value="1" />
+
+    <br>
+    <input  type="submit" value="Seleccionar medicamento" />
+
+    <br>
+    <br>
 
 
 
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cantidad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fecha_venc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fabricante)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.precio)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fecha_venc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fabricante)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.precio)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id_med }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id_med }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id_med })
-        </td>
-    </tr>
 }
 
-</table>
+<form method="post" action="@ViewBag.FormAction">
+    <input type="hidden" name="token_ws" value="@ViewBag.TokenWs" />
+    <input type="submit" value="Ir a pagar" />
+</form>

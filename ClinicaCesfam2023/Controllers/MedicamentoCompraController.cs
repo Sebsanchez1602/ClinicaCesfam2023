@@ -1,127 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using ClinicaCesfam2023.Models;
+﻿    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web;
+    using System.Web.Mvc;
+    using Transbank.Common;
+    using Transbank.Webpay.Common;
+    using Transbank.Webpay.WebpayPlus;
+    using ClinicaCesfam2023.Models;
 
-namespace ClinicaCesfam2023.Controllers
-{
-    public class MedicamentoCompraController : Controller
+
+
+    namespace ClinicaCesfam2023.Controllers
     {
-        private CesfamClinicaEntities db = new CesfamClinicaEntities();
-
-        // GET: MedicamentoCompra
-        public ActionResult Index()
+        public class MedicamentoCompraController : Controller
         {
-            return View(db.medicamento.ToList());
-        }
-
-        // GET: MedicamentoCompra/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
+            public ActionResult Index(int? medicamentoId, string token_ws, int? cantidad)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            medicamento medicamento = db.medicamento.Find(id);
-            if (medicamento == null)
-            {
-                return HttpNotFound();
-            }
-            return View(medicamento);
-        }
 
-        // GET: MedicamentoCompra/Create
-        public ActionResult Create()
-        {
+
+            var tx = new Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, WebpayIntegrationType.Test));
+            using (var db = new CesfamClinicaEntities())
+            {
+                var medicamento = db.medicamento.ToList();
+                ViewBag.Medicamentos = new SelectList(medicamento, "id_med", "nombre");
+
+                if (medicamentoId != null)
+                {
+
+                    var medicamentoSeleccionado = db.medicamento.FirstOrDefault(m => m.id_med == medicamentoId);
+
+                    if (medicamentoSeleccionado != null)
+                    {
+
+
+                        if (medicamentoSeleccionado.cantidad >= cantidad)
+
+                        {
+
+
+                            medicamentoSeleccionado.cantidad -= cantidad.Value;
+                            db.SaveChanges();
+
+
+              
+                            var amount = cantidad.Value * medicamentoSeleccionado.precio;
+                            var buyOrder = new Random().Next(100000, 999999999).ToString();
+                            var sessionId = "sessionId";
+                            string finalUrl = "https://localhost:44363/Home/Final";
+
+                            var initResult = tx.Create(buyOrder, sessionId, amount, finalUrl);
+                            var tokenWs = initResult.Token;
+                            var formAction = initResult.Url;
+                  
+
+                            ViewBag.Amount = amount;
+                            ViewBag.BuyOrder = buyOrder;
+                            ViewBag.TokenWs = tokenWs;
+                            ViewBag.FormAction = formAction;
+                        }
+
+                        else
+                        {
+                            // Mostrar mensaje de error si no hay suficientes medicamentos disponibles
+                            ViewBag.ErrorMessage = "No hay suficientes medicamentos disponibles.";
+                        }
+
+
+
+
+                    }
+
+
+                }
+
+            }
+
+
             return View();
         }
 
-        // POST: MedicamentoCompra/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_med,nombre,descripcion,cantidad,fecha_venc,fabricante,precio")] medicamento medicamento)
-        {
-            if (ModelState.IsValid)
-            {
-                db.medicamento.Add(medicamento);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(medicamento);
-        }
 
-        // GET: MedicamentoCompra/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            medicamento medicamento = db.medicamento.Find(id);
-            if (medicamento == null)
-            {
-                return HttpNotFound();
-            }
-            return View(medicamento);
-        }
 
-        // POST: MedicamentoCompra/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id_med,nombre,descripcion,cantidad,fecha_venc,fabricante,precio")] medicamento medicamento)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(medicamento).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(medicamento);
-        }
 
-        // GET: MedicamentoCompra/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            medicamento medicamento = db.medicamento.Find(id);
-            if (medicamento == null)
-            {
-                return HttpNotFound();
-            }
-            return View(medicamento);
-        }
 
-        // POST: MedicamentoCompra/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            medicamento medicamento = db.medicamento.Find(id);
-            db.medicamento.Remove(medicamento);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
+
+       
+        
     }
 }
